@@ -1,0 +1,244 @@
+<div class="customer-dialog-container">
+  <mat-toolbar class="blue-gradient-bg-color">
+    <span class="centered-position">
+      New Customer Registration
+    </span>
+  </mat-toolbar>
+
+  <div class="divider"></div>
+  <div class="form-container">
+    <form [formGroup]="customerForm"
+          (ngSubmit)="onSubmit()">
+      <!--PERSONAL INFORMATION-->
+      <div class="form-section">
+        <h3 class="section-title">
+          <mat-icon>badge</mat-icon>
+          Personal Information
+        </h3>
+
+        <div class="form-grid">
+          <!-- Surname -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Surname</mat-label>
+            <input
+              matInput
+              formControlName="surname"
+              placeholder="Enter surname"
+              autocomplete="family-name">
+          </mat-form-field>
+
+          <!-- Other Names -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Other Names</mat-label>
+
+            <input
+              matInput
+              formControlName="otherNames"
+              placeholder="Enter other names"
+              autocomplete="given-name">
+
+            <mat-error *ngIf="customerForm.get('otherNames')?.hasError('required')">
+              Other names are required
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Gender -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="Male">Male</mat-option>
+              <mat-option value="Female">Female</mat-option>
+            </mat-select>
+            <mat-error *ngIf="customerForm.get('gender')?.hasError('required')">
+              Gender is required
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Date of Birth -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date of Birth</mat-label>
+            <input
+              matInput
+              formControlName="dob"
+              [matDatepicker]="dobPicker"
+              [max]="today"
+              placeholder="Select date">
+
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dobPicker">
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #dobPicker></mat-datepicker>
+            <mat-error *ngIf="customerForm.get('dob')?.hasError('required')">
+              Birth date is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!--CONTACT INFORMATION-->
+
+      <div class="form-section">
+        <h3 class="section-title">
+          <mat-icon>contact_phone</mat-icon>
+          Contact Information
+        </h3>
+
+        <div class="form-grid">
+          <!-- Phone -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              type="tel"
+              maxlength="10"
+              placeholder="0712345678"
+              autocomplete="tel"
+              formControlName="phone">
+
+            <mat-error *ngIf="customerForm.get('phone')?.hasError('required')">
+              Phone number is required
+            </mat-error>
+
+          </mat-form-field>
+
+          <!-- Email -->
+
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>Email Address</mat-label>
+
+            <input
+              matInput
+              type="email"
+              autocomplete="email"
+              placeholder="example@email.com"
+              formControlName="email">
+
+            <mat-error *ngIf="customerForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+
+            <mat-error *ngIf="customerForm.get('email')?.hasError('email')">
+              Enter a valid email address
+            </mat-error>
+
+          </mat-form-field>
+
+          <!-- Residence -->
+
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>Residence</mat-label>
+
+            <input
+              matInput
+              formControlName="residence"
+              placeholder="Enter residence">
+
+            <mat-error *ngIf="customerForm.get('residence')?.hasError('required')">
+              Residence is required
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+      <!--EMPLOYMENT INFORMATION-->
+      <div class="form-section">
+        <h3 class="section-title">
+          <mat-icon>work</mat-icon>
+          Employment Information
+        </h3>
+        <div class="form-grid">
+
+          <!-- Occupation -->
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>Occupation</mat-label>
+
+            <input
+              matInput
+              formControlName="occupation"
+              placeholder="Enter occupation">
+
+            <mat-error *ngIf="customerForm.get('occupation')?.hasError('required')">
+              Occupation is required
+            </mat-error>
+
+          </mat-form-field>
+
+          <!-- Monthly Income -->
+
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>Monthly Income (Ksh)</mat-label>
+
+            <input
+              matInput
+              type="number"
+              min="0"
+              step="100"
+              formControlName="monthlyIncome"
+              placeholder="Enter monthly income">
+
+            <mat-error *ngIf="customerForm.get('monthlyIncome')?.hasError('required')">
+              Monthly income is required
+            </mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+<!--BUTTONS-->
+      <div class="button-container">
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="customerForm.invalid || isLoading">
+
+          <mat-spinner
+            *ngIf="isLoading"
+            diameter="20">
+          </mat-spinner>
+
+          <ng-container *ngIf="!isLoading">
+            <mat-icon>save</mat-icon>
+            Save Customer
+          </ng-container>
+
+        </button>
+
+        <button
+          mat-flat-button
+          color="warn"
+          type="button"
+          (click)="onCancel()">
+
+          <mat-icon>close</mat-icon>
+
+          Cancel
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+<!--FOOTER-->
+  <div class="small-footer-section">
+    <span class="centered-position">
+      All customer information is securely stored and handled according to your organization's privacy policy.
+    </span>
+  </div>
+</div>

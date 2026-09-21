@@ -1,0 +1,147 @@
+<div class="update-customer-dialog-container">
+  <mat-toolbar class="app-toolbar">
+    <span class="toolbar-title">Update Customer</span>
+  </mat-toolbar>
+
+  <div class="form-container">
+    <form [formGroup]="updateCustomerForm" (ngSubmit)="onUpdate()">
+
+      <!--surname-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Surname</mat-label>
+        <input formControlName="surname" matInput required placeholder="Enter surname">
+        @if (updateCustomerForm.get('surname')?.hasError('required')){
+          <mat-error>Surname is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--other names-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Other Names</mat-label>
+        <input formControlName="otherNames" matInput required>
+        @if (updateCustomerForm.get('otherNames')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--gender-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="" disabled>Select Below</mat-option>
+          <mat-option value="Male">Male</mat-option>
+          <mat-option value="Female">Female</mat-option>
+        </mat-select>
+
+        @if (updateCustomerForm.get('gender')?.hasError('required')){
+          <mat-error>Gender is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--dob-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Date of Birth</mat-label>
+        <input formControlName="dob" matInput required [matDatepicker]="dateOfBirthPicker">
+        <mat-datepicker-toggle matSuffix [for]="dateOfBirthPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateOfBirthPicker></mat-datepicker>
+        @if (updateCustomerForm.get('dob')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--phone-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Phone</mat-label>
+        <input formControlName="phone" matInput required placeholder="Enter phone number">
+        <mat-hint>07123456789</mat-hint>
+        @if (updateCustomerForm.get('phone')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        } @else if (updateCustomerForm.get('phone')?.hasError('pattern')){
+          <mat-error>Phone must be a valid number</mat-error>
+        }
+      </mat-form-field>
+
+      <!--email-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email</mat-label>
+        <input type="email" formControlName="email" matInput required>
+        @if (updateCustomerForm.get('email')?.hasError('required')) {
+          <mat-error>Email is required</mat-error>
+        } @else if (updateCustomerForm.get('email')?.hasError('email')) {
+          <mat-error>Invalid email format</mat-error>
+        }
+      </mat-form-field>
+
+      <!--residence-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Residence</mat-label>
+        <input type="text" formControlName="residence" matInput required>
+        @if (updateCustomerForm.get('residence')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--occupation-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Occupation</mat-label>
+        <input type="text" formControlName="occupation" matInput required>
+        @if (updateCustomerForm.get('occupation')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--income-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Monthly  Income</mat-label>
+        <input type="number" formControlName="monthlyIncome" matInput required>
+        @if (updateCustomerForm.get('monthlyIncome')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        }
+        @if (updateCustomerForm.get('monthlyIncome')?.hasError('min')){
+          <mat-error>Income must be greater than zero</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="action-buttons-container">
+        <!--update button-->
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading()">
+
+          @if (!loading()) {
+            <mat-icon>edit</mat-icon>
+          }
+
+          @if (!loading()) {
+            <span>Update Customer</span>
+          }
+
+          @if (loading()) {
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20">
+            </mat-progress-spinner>
+          }
+
+          @if (loading()) {
+            <span>Updating...</span>
+          }
+
+        </button>
+
+        <!--cancel button-->
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onCancel()"
+          [disabled]="loading()">
+          <mat-icon>cancel</mat-icon>
+          <span>Cancel</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,195 @@
+<div class="customers-data-container">
+  <!-- HEADER -->
+  <mat-toolbar class="blue-gradient-bg-color">
+    <span class="toolbar-title">Loan Records</span>
+    <span class="toolbar-spacer"></span>
+
+    <button mat-raised-button
+            color="primary"
+            matTooltip="Refresh loan records"
+            (click)="loadLoansData()">
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            *ngIf="datasource.data.length > 0"
+            matTooltip="Export Customers"
+            (click)="exportLoans()">
+      <mat-icon>download</mat-icon>
+      Export
+    </button>
+  </mat-toolbar>
+
+  <!-- SEARCH -->
+  <div class="search-section">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search Records</mat-label>
+
+      <input
+        matInput
+        placeholder="Search by name, email, phone..."
+        (keyup)="applyFilter($event)">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="50">
+    </mat-progress-spinner>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div
+    class="empty-state"
+    *ngIf="!isLoading && datasource.data.length === 0">
+    <mat-icon class="empty-icon">groups</mat-icon>
+    <h2>No Loans Found</h2>
+
+    <p>
+      No Loan records are available.
+    </p>
+  </div>
+
+  <!-- TABLE -->
+  <div
+    class="table-container"
+    *ngIf="!isLoading && datasource.data.length > 0">
+
+    <table
+      mat-table
+      [dataSource]="datasource"
+      matSort
+      class="mat-elevation-z2">
+
+      <!-- Name -->
+      <ng-container matColumnDef="loanId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Serial No.
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+          {{ loan.loanId }}
+        </td>
+      </ng-container>
+
+      <!-- Age -->
+      <ng-container matColumnDef="customerInformation">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <mat-icon>person</mat-icon>
+          Customer Name
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+          {{ loan.customerInformation?.customerFullName }}
+        </td>
+      </ng-container>
+
+      <!-- Email -->
+      <ng-container matColumnDef="loanAmountRequested">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Amount Requested
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+          {{ loan.loanAmountRequested }}
+        </td>
+      </ng-container>
+
+      <!-- Phone -->
+      <ng-container matColumnDef="loanAmountIssued">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+         Amount Issued
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+          {{ loan.loanAmountIssued }}
+        </td>
+      </ng-container>
+
+      <!-- Residence -->
+      <ng-container matColumnDef="loanPurpose">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Loan Purpose
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+          {{ loan.loanPurpose }}
+        </td>
+      </ng-container>
+
+      <!-- Loan Status -->
+      <ng-container matColumnDef="loanStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Loan Status
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+    <span
+      class="loan-status-badge"
+      [ngClass]="{
+        'status-pending': loan.loanStatus === 'PENDING',
+        'status-approved': loan.loanStatus === 'APPROVED',
+        'status-rejected': loan.loanStatus === 'REJECTED'
+      }"
+    >
+      {{ loan.loanStatus }}
+    </span>
+        </td>
+      </ng-container>
+
+      <!-- actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Actions
+        </th>
+
+        <td mat-cell *matCellDef="let loan">
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Process loan"
+            (click)="viewAndModify(loan)">
+            <mat-icon style="color: #16a34a">attach_money</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="accent"
+            matTooltip="View loan information"
+            (click)="viewLoanInfo(loan)">
+            <mat-icon style="color: #1E88E5">visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- HEADER -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true">
+      </tr>
+
+      <!-- ROW -->
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+
+    </table>
+
+  </div>
+
+  <!-- PAGINATOR -->
+  <mat-paginator
+    *ngIf="!isLoading && datasource.data.length > 0"
+    [length]="datasource.data.length"
+    [pageSize]="10"
+    [pageSizeOptions]="[10,25,50,100]"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

@@ -1,0 +1,282 @@
+<div class="dashboard-container">
+  <!-- HEADER -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Welcome {{userRole}}</h1>
+      <p>
+        Overview of the lending operations
+      </p>
+    </div>
+
+    <div class="dashboard-actions">
+      <mat-form-field
+        appearance="outline"
+        class="period-selector">
+
+        <mat-label>
+          Period
+        </mat-label>
+
+        <mat-select
+          [value]="selectedPeriod()"
+          (selectionChange)="onPeriodChange($event.value)">
+
+          <mat-option value="LAST_7_DAYS">
+            Last 7 days
+          </mat-option>
+
+          <mat-option value="LAST_30_DAYS">
+            Last 30 days
+          </mat-option>
+
+          <mat-option value="LAST_6_MONTHS">
+            Last 6 months
+          </mat-option>
+
+          <mat-option value="LAST_12_MONTHS">
+            Last 12 months
+          </mat-option>
+
+        </mat-select>
+      </mat-form-field>
+
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="loadDashboard()"
+        [disabled]="loading()">
+
+        <mat-icon>
+          refresh
+        </mat-icon>
+
+        Refresh
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOADING -->
+  @if (loading()) {
+    <div class="state-container">
+      <mat-icon class="state-icon">
+        sync
+      </mat-icon>
+      <h3>Loading dashboard...</h3>
+      <p>
+        Fetching the latest lending information.
+      </p>
+    </div>
+
+  }@else if (hasError()) {
+    <div class="state-container error-state">
+      <mat-icon class="state-icon">
+        error_outline
+      </mat-icon>
+
+      <h3>
+        Unable to load dashboard
+      </h3>
+
+      <p>
+        Something went wrong while retrieving
+        dashboard information.
+      </p>
+
+      <button
+        mat-raised-button
+        type="button"
+        (click)="loadDashboard()">
+        Try Again
+      </button>
+    </div>
+  } @else { <!--LOAD DASHBOARD-->
+    <!-- KPI CARDS -->
+    <div class="stats-grid">
+      <!-- CUSTOMERS -->
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon customers-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Customers
+            </span>
+
+            <h2>
+              {{ summary()?.totalCustomers | number }}
+            </h2>
+
+            <span class="stat-description">
+              <strong>
+                {{ summary()?.customersThisMonth }}
+              </strong>
+              registered this month
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- LOANS -->
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon loans-icon">
+            <mat-icon>account_balance</mat-icon>
+          </div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Loans
+            </span>
+
+            <h2>
+              {{ summary()?.totalLoans | number }}
+            </h2>
+
+            <span class="stat-description">
+              <strong>
+                {{ summary()?.activeLoans }}
+              </strong>
+              active loans
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+
+      <!-- REPAYMENTS -->
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon repayments-icon">
+            <mat-icon>payments</mat-icon>
+          </div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Repayments
+            </span>
+
+            <h2>
+              KES
+              {{ summary()?.totalRepayments | number:'1.0-0' }}
+            </h2>
+
+            <span class="stat-description">
+              Total amount collected
+            </span>
+
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <!-- OUTSTANDING -->
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon outstanding-icon">
+            <mat-icon>account_balance_wallet</mat-icon>
+          </div>
+
+          <div class="stat-content">
+            <span class="stat-label">
+              Outstanding
+            </span>
+
+            <h2>
+              KES
+              {{ summary()?.outstandingBalance | number:'1.0-0' }}
+            </h2>
+
+            <span class="stat-description">
+              Current outstanding balance
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+    <!-- CHARTS -->
+    <div class="charts-grid">
+      <!-- LOAN BORROWING -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>
+            Loan Borrowing Trend
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Monthly amount borrowed
+          </mat-card-subtitle>
+
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            @if (loanTrend().length > 0) {
+              <canvas
+                baseChart
+                [data]="loanChartData"
+                [options]="loanChartOptions"
+                type="line">
+              </canvas>
+            } @else {
+              <div class="empty-chart">
+                <mat-icon>
+                  insert_chart_outlined
+                </mat-icon>
+
+                <span>
+                  No loan data available
+                </span>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+
+      <!-- CUSTOMER REGISTRATION -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>
+            Customer Registrations
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            New customers registered over time
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="chart-container">
+            @if (customerTrend().length > 0) {
+              <canvas
+                baseChart
+                [data]="customerChartData"
+                [options]="customerChartOptions"
+                type="bar">
+              </canvas>
+
+            } @else {
+              <div class="empty-chart">
+                <mat-icon>
+                  people_outline
+                </mat-icon>
+
+                <span>
+                  No customer data available
+                </span>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
+</div>

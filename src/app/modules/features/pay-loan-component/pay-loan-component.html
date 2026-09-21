@@ -1,0 +1,42 @@
+<div class="dialog-container">
+  <mat-toolbar>
+    <span class="toolbar-title">Loan Payment Form</span>
+    <span class="flex-end">
+    Customer:
+    <strong>{{ payment.customerFullName }}</strong>
+  </span>
+  </mat-toolbar>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Amount To Pay</mat-label>
+      <input matInput formControlName="amountToPay" required placeholder="enter amount paid by the customer"
+      autocomplete="off">
+      <mat-icon matIconSuffix>attach_money</mat-icon>
+      <mat-hint>enter numbers only. e.g 1000, 2000, etc</mat-hint>
+      @if (paymentForm.get('amountToPay')?.hasError('required')){
+        <mat-error>Amount to pay is required</mat-error>
+      } @else if (paymentForm.get('amountToPay')?.hasError('pattern')){
+        <mat-error>Amount to pay must be a number</mat-error>
+      } @else if (paymentForm.get('amountToPay')?.hasError('min')){
+        <mat-error>Amount to pay must be greater than 0</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit"
+              [disabled]="paymentForm.invalid || isLoading">
+        @if (isLoading) {
+          <mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>
+          <span>Processing...</span>
+        } @else {
+          <span>Pay</span>
+        }
+      </button>
+
+      <button mat-raised-button color="warn" type="button" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

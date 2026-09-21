@@ -1,0 +1,176 @@
+.request-loan-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* ================================
+   Toolbar
+================================ */
+
+.app-toolbar {
+  min-height: 72px;
+  height: auto;
+  padding: 14px 24px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.toolbar-title {
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.customer-summary {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.customer-summary span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.customer-summary strong {
+  font-weight: 600;
+}
+
+
+/* ================================
+   Form
+================================ */
+
+.loan-form {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+
+/* ================================
+   Textarea
+================================ */
+
+textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+
+/* ================================
+   Submit Button
+================================ */
+
+.submit-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.submit-button-container button {
+  min-width: 160px;
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.submit-button-container mat-progress-spinner {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+
+/* ================================
+   Responsive Design
+================================ */
+
+@media (max-width: 768px) {
+
+  .request-loan-container {
+    margin: 20px auto;
+    padding: 0 16px;
+  }
+
+  .app-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 18px;
+  }
+
+  .toolbar-title {
+    font-size: 19px;
+  }
+
+  .customer-summary {
+    margin-left: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+
+    font-size: 13px;
+  }
+
+  .loan-form {
+    padding: 24px 18px;
+  }
+
+  .submit-button-container {
+    justify-content: stretch;
+  }
+
+  .submit-button-container button {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .request-loan-container {
+    margin: 12px auto;
+    padding: 0 10px;
+  }
+
+  .app-toolbar {
+    padding: 16px;
+  }
+
+  .loan-form {
+    padding: 20px 14px;
+    gap: 18px;
+  }
+
+  .toolbar-title {
+    font-size: 18px;
+  }
+}

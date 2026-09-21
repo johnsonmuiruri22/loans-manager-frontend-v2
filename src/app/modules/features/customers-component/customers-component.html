@@ -1,0 +1,362 @@
+<div class="customers-data-container">
+  <!-- HEADER -->
+  <mat-toolbar class="blue-gradient-bg-color">
+    <span class="toolbar-title">
+      Customers
+    </span>
+
+    <span class="toolbar-spacer"></span>
+    <!-- ADD CUSTOMER -->
+    <button
+      mat-raised-button
+      color="primary"
+      matTooltip="Click to Add Customer"
+      type="button"
+      (click)="openCustomerDialog()">
+
+      <mat-icon>
+        person_add
+      </mat-icon>
+      Add Customer
+    </button>
+
+    <!-- REFRESH -->
+    <button
+      mat-raised-button
+      color="primary"
+      matTooltip="Refresh Customers"
+      type="button"
+      (click)="loadCustomerData()"
+      [disabled]="isLoading()">
+
+      <mat-icon>
+        refresh
+      </mat-icon>
+
+      Refresh
+    </button>
+    <!-- EXPORT -->
+    @if (!isLoading() && dataSource.data.length > 0) {
+      <button
+        mat-raised-button
+        color="primary"
+        matTooltip="Export Customers"
+        type="button"
+        (click)="exportCustomers()">
+
+        <mat-icon>
+          download
+        </mat-icon>
+        Export
+      </button>
+    }
+  </mat-toolbar>
+
+
+  <!-- SEARCH -->
+  <div class="search-section">
+    <mat-form-field
+      appearance="outline"
+      class="search-field">
+      <mat-label>
+        Search Customers
+      </mat-label>
+
+      <input
+        matInput
+        type="text"
+        placeholder="Search by name, email, phone..."
+        (keyup)="applyFilter($event)">
+
+      <mat-icon matSuffix>
+        search
+      </mat-icon>
+    </mat-form-field>
+  </div>
+
+
+  <!-- LOADING STATE -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-progress-spinner
+        mode="indeterminate"
+        diameter="50">
+      </mat-progress-spinner>
+    </div>
+  } @else if (hasError()) {
+    <div class="empty-state error-state">
+      <mat-icon class="empty-icon">
+        error_outline
+      </mat-icon>
+
+      <h2>
+        Unable to Load Customers
+      </h2>
+
+      <p>
+        Something went wrong while retrieving
+        customer records.
+      </p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="loadCustomerData()">
+        <mat-icon>
+          refresh
+        </mat-icon>
+        Try Again
+      </button>
+    </div>
+  } @else if (dataSource.data.length === 0) {
+    <div class="empty-state">
+      <mat-icon class="empty-icon">
+        groups
+      </mat-icon>
+
+      <h2>
+        No Customers Found
+      </h2>
+
+      <p>
+        No customer records are available.
+        Click <strong>Add Customer</strong>
+        to create one.
+      </p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="openCustomerDialog()">
+
+        <mat-icon>
+          person_add
+        </mat-icon>
+
+        Add Customer
+      </button>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z2">
+
+        <!-- NAME -->
+        <ng-container matColumnDef="name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header>
+            Name
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let customer">
+            {{ customer.surname }}
+            {{ customer.otherNames }}
+          </td>
+        </ng-container>
+
+        <!-- AGE -->
+        <ng-container matColumnDef="age">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header>
+
+            <mat-icon>
+              person
+            </mat-icon>
+            Age
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let customer">
+            {{ customer.age }}
+          </td>
+        </ng-container>
+
+        <!-- EMAIL -->
+        <ng-container matColumnDef="email">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header>
+
+            <mat-icon>
+              email
+            </mat-icon>
+            Email
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let customer">
+            {{ customer.email }}
+          </td>
+        </ng-container>
+
+        <!-- PHONE -->
+        <ng-container matColumnDef="phone">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header>
+            <mat-icon>
+              phone
+            </mat-icon>
+            Phone
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let customer">
+            {{ customer.phone }}
+          </td>
+        </ng-container>
+
+        <!-- RESIDENCE -->
+        <ng-container matColumnDef="residence">
+
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header>
+            <mat-icon>
+              home
+            </mat-icon>
+            Residence
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let customer">
+            {{ customer.residence }}
+          </td>
+        </ng-container>
+
+        <!-- OCCUPATION -->
+        <ng-container matColumnDef="occupation">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header>
+
+            <mat-icon>
+              work
+            </mat-icon>
+            Occupation
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let customer">
+            {{ customer.occupation }}
+          </td>
+        </ng-container>
+
+
+        <!-- ACTIONS -->
+        <ng-container matColumnDef="actions">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Actions
+          </th>
+
+          <td
+            mat-cell
+            *matCellDef="let customer">
+
+            <!-- EDIT -->
+            <button
+              mat-icon-button
+              color="primary"
+              type="button"
+              matTooltip="Edit Customer"
+              (click)="editCustomer(customer)">
+
+              <mat-icon class="edit-btn">
+                edit
+              </mat-icon>
+            </button>
+
+            <!-- VIEW -->
+            <button
+              class="view-btn"
+              mat-icon-button
+              color="accent"
+              type="button"
+              matTooltip="View Customer"
+              (click)="viewCustomer(customer)">
+
+              <mat-icon class="view-btn">
+                visibility
+              </mat-icon>
+            </button>
+
+            <!-- DELETE -->
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              matTooltip="Delete Customer"
+              (click)="deleteCustomer(customer)">
+
+              <mat-icon class="delete-btn">
+                delete
+              </mat-icon>
+            </button>
+
+            <!-- REQUEST LOAN -->
+            <button
+              mat-icon-button
+              color="accent"
+              type="button"
+              matTooltip="Request loan for customer"
+              (click)="requestLoanForCustomer(customer)">
+
+              <mat-icon class="request-btn">
+                request_quote
+              </mat-icon>
+
+            </button>
+
+          </td>
+        </ng-container>
+
+        <!-- HEADER ROW -->
+        <tr
+          mat-header-row
+          *matHeaderRowDef="tableColumns; sticky: true">
+        </tr>
+
+        <!-- DATA ROW -->
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: tableColumns;
+          ">
+        </tr>
+      </table>
+
+    </div>
+
+    <!-- PAGINATOR -->
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+</div>

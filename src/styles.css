@@ -1,1 +1,405 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* ===========================================
+   TOOLBAR
+=========================================== */
+
+mat-toolbar {
+  border-radius: 12px 12px 0 0;
+  padding: 0 18px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background:linear-gradient(
+    135deg,
+    #1565C0,
+    #1E88E5
+  );
+
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.toolbar-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+.edit-btn{
+  color: #1E88E5;
+  font-weight: bold;
+}
+
+.delete-btn{
+  color: #c62828;
+}
+
+.view-btn{
+  color: #1976d2;
+}
+
+.request-btn{
+  color: #16a34a;
+}
+
+.logs-data-container {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+
+  background: #f5f7fb;
+
+  overflow: auto;
+}
+
+
+/* =========================================
+   TOOLBAR
+========================================= */
+
+.app-toolbar {
+  width: 100%;
+  min-height: 64px;
+  height: auto;
+
+  padding: 0 20px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  background:linear-gradient(
+    135deg,
+    #1565C0,
+    #1E88E5
+  );
+
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+
+/* Toolbar title */
+
+.toolbar-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+
+  letter-spacing: -0.2px;
+}
+
+
+/* Toolbar buttons container */
+
+.flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+}
+
+
+/* =========================================
+   TABLE WRAPPER
+========================================= */
+
+.logs-data-container table {
+  width: 100%;
+  min-width: 700px;
+
+  background: #ffffff;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.04),
+    0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.mat-mdc-header-row {
+  height: 54px;
+
+  background: #f8fafc;
+}
+
+.mat-mdc-header-cell {
+  padding: 0 18px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  color: #475569;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   TABLE ROW
+========================================= */
+
+.mat-mdc-row {
+  height: 58px;
+
+  background: #ffffff;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Cells */
+
+.mat-mdc-cell {
+  padding: 0 18px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  color: #334155;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   ROW HOVER
+========================================= */
+
+.mat-mdc-row:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   LAST ROW
+========================================= */
+
+.mat-mdc-row:last-child .mat-mdc-cell {
+  border-bottom: none;
+}
+
+
+/* =========================================
+   LOG ID
+========================================= */
+
+.mat-mdc-cell:first-child {
+  color: #64748b;
+
+  font-weight: 600;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   ACTIVITY
+========================================= */
+
+.mat-mdc-cell:nth-child(2) {
+  color: #1e293b;
+
+  font-weight: 500;
+}
+
+
+/* =========================================
+   LOG TYPE
+========================================= */
+
+.mat-mdc-cell:nth-child(3) {
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   TIMESTAMP
+========================================= */
+
+.mat-mdc-cell:nth-child(4) {
+  color: #64748b;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.text-centered {
+  margin: 50px auto;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+
+/* =========================================
+   LOADING SPINNER
+========================================= */
+
+.logs-data-container > mat-progress-spinner {
+  display: block;
+
+  margin: 80px auto;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.flex-end button {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+.flex-end button:not(:disabled):hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.12);
+}
+
+
+.flex-end button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+.flex-end mat-icon {
+  font-size: 19px;
+
+  width: 19px;
+  height: 19px;
+}
+
+
+/* =========================================
+   RESPONSIVE TABLE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .logs-data-container {
+    padding: 16px;
+
+    overflow-x: auto;
+  }
+
+
+  .app-toolbar {
+    padding: 14px 16px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 14px;
+  }
+
+
+  .flex-end {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+  }
+
+
+  .logs-data-container table {
+    min-width: 700px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .logs-data-container {
+    padding: 10px;
+  }
+
+
+  .app-toolbar {
+    border-radius: 10px;
+  }
+
+
+  .toolbar-title {
+    font-size: 18px;
+  }
+
+
+  .flex-end {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .flex-end button {
+    width: 100%;
+  }
+}

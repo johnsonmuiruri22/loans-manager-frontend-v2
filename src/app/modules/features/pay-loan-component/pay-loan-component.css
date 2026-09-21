@@ -1,0 +1,144 @@
+.dialog-container {
+  width: 100%;
+  min-width: 420px;
+  max-width: 560px;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.dialog-container mat-toolbar {
+  min-height: 72px;
+  height: auto;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+  color: #ffffff;
+}
+
+.toolbar-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.flex-end {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.95;
+  text-align: right;
+  line-height: 1.4;
+}
+
+.dialog-container form {
+  padding: 28px 24px 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.dialog-container mat-form-field {
+  margin-bottom: 8px;
+}
+
+.dialog-container mat-label {
+  font-weight: 500;
+}
+
+.dialog-container mat-hint {
+  font-size: 12px;
+  color: #757575;
+}
+
+.dialog-container mat-error {
+  font-size: 12px;
+}
+
+.dialog-container input {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eeeeee;
+}
+
+.button-container button {
+  min-width: 130px;
+  min-height: 44px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-right: 10px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.button-container button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(25, 118, 210, 0.25);
+}
+
+.button-container button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.button-container mat-progress-spinner {
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+
+  .dialog-container {
+    min-width: 0;
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .dialog-container mat-toolbar {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .toolbar-title {
+    font-size: 17px;
+  }
+
+  .flex-end {
+    margin-left: 0;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .dialog-container form {
+    padding: 22px 18px 20px;
+  }
+
+  .button-container {
+    justify-content: stretch;
+  }
+
+  .button-container button {
+    width: 100%;
+  }
+}

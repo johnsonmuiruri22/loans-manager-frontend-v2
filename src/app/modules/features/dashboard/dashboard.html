@@ -1,0 +1,77 @@
+<div class="dashboard-container-full-width">
+
+  <!-- HEADER -->
+  <mat-toolbar class="dashboard-toolbar">
+    <div class="header-panel">
+      <mat-icon>dashboard</mat-icon>
+      <span class="title">Loan Management System</span>
+    </div>
+
+    <span class="spacer"></span>
+    <div class="inline-menu-items">
+      <button mat-button routerLink="/dashboard/adminDashboard"
+              *ngIf="authState.role() === 'ADMIN' || authState.role() === 'BANKER'">
+        <mat-icon>home</mat-icon>
+        Home
+      </button>
+
+      <button mat-button routerLink="/dashboard/customers"
+              *ngIf="authState.role() === 'ADMIN' || authState.role() === 'BANKER'">
+        <mat-icon>people</mat-icon>
+        Customers
+      </button>
+
+      <button mat-button routerLink="/dashboard/loans"
+              *ngIf="authState.role() === 'ADMIN' || authState.role() === 'BANKER'">
+        <mat-icon>account_balance</mat-icon>
+        Loans
+      </button>
+
+      <button mat-button routerLink="/dashboard/repayments"
+              *ngIf="authState.role() === 'ADMIN' || authState.role() === 'BANKER'">
+        <mat-icon>receipt</mat-icon>
+        Repayments
+      </button>
+
+      <button mat-button routerLink="/dashboard/users"
+              *ngIf="authState.role() === 'ADMIN'">
+        <mat-icon>group</mat-icon>
+        Users
+      </button>
+
+      <button mat-button routerLink="/dashboard/logs"
+              *ngIf="authState.role() === 'ADMIN'">
+        <mat-icon>history</mat-icon>
+        Activity Logs
+      </button>
+
+    </div>
+    <span class="spacer"></span>
+    <div class="user-panel">
+      <mat-icon>account_circle</mat-icon>
+      <div class="user-details">
+        <span class="username">
+          {{authState.username()}}
+        </span>
+        <span class="role">
+          {{authState.role()}}
+        </span>
+      </div>
+      <button
+        mat-icon-button
+        matTooltip="Logout" (click)="logoutUser()">
+        <mat-icon style="color: #f1f5f9">
+          logout
+        </mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  <!-- MAIN CONTENT -->
+  <main class="main-navigation-page">
+    <router-outlet></router-outlet>
+  </main>
+  <!-- FOOTER -->
+  <footer class="footer">
+    © 2026 Johnson Technologies Kenya • Loan Management System v1.0
+  </footer>
+</div>

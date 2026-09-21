@@ -1,0 +1,203 @@
+<div class="customer-view-container">
+  <mat-toolbar color="primary" class="customer-toolbar">
+    <div class="toolbar-title">
+      <mat-icon style="color: #ffffff">badge</mat-icon>
+      <span style="color: #ffffff">Customer Profile</span>
+    </div>
+    <span class="toolbar-spacer"></span>
+    <button
+      mat-icon-button
+      matTooltip="Close"
+      (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <!--PROFILE CARD-->
+  <mat-card class="customer-profile-card">
+    <!-- Customer Avatar -->
+    <div class="profile-header">
+      <div class="customer-avatar">
+        {{ customer.surname.charAt(0) }}{{ customer.otherNames.charAt(0) }}
+      </div>
+      <div>
+        <h2>
+          {{ customer.surname }}
+          {{ customer.otherNames }}
+        </h2>
+
+        <p class="customer-number">
+          Customer ID:
+          <strong>{{ customer.customerId }}</strong>
+        </p>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!--
+         PERSONAL INFORMATION
+    -->
+
+    <div class="details-section">
+      <h3 class="section-title">
+        <mat-icon>person</mat-icon>
+        Personal Information
+      </h3>
+
+      <div class="details-grid">
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>badge</mat-icon>
+            Full Name
+          </span>
+          <span class="detail-value">
+            {{ customer.surname }}
+            {{ customer.otherNames }}
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>event</mat-icon>
+            Date of Birth
+          </span>
+          <span class="detail-value">
+            {{ customer.dob | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>cake</mat-icon>
+            Age
+          </span>
+
+          <span class="detail-value">
+            {{ customer.age }} Years
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>wc</mat-icon>
+            Gender
+          </span>
+
+          <span class="detail-value">
+            {{ customer.gender }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!--CONTACT INFORMATION-->
+
+    <div class="details-section">
+      <h3 class="section-title">
+        <mat-icon>contact_phone</mat-icon>
+        Contact Information
+      </h3>
+
+      <div class="details-grid">
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>phone</mat-icon>
+            Phone
+          </span>
+
+          <span class="detail-value">
+            {{ customer.phone }}
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>email</mat-icon>
+            Email
+          </span>
+
+          <span class="detail-value">
+            {{ customer.email }}
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>home</mat-icon>
+            Residence
+          </span>
+          <span class="detail-value">
+            {{ customer.residence }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCIAL INFORMATION-->
+
+    <div class="details-section">
+      <h3 class="section-title">
+        <mat-icon>account_balance</mat-icon>
+        Financial Information
+      </h3>
+
+      <div class="details-grid">
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>work</mat-icon>
+            Occupation
+          </span>
+
+          <span class="detail-value">
+            {{ customer.occupation }}
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>payments</mat-icon>
+            Monthly Income
+          </span>
+
+          <span class="detail-value">
+            {{ customer.monthlyIncome | currency:'KES':'symbol':'1.0-0' }}
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>verified</mat-icon>
+            Credit Status
+          </span>
+
+          <span class="detail-value">
+            <mat-chip
+              [color]="customer.creditStatus === 'GOOD' ? 'primary' : 'warn'"
+              selected>
+              {{ customer.creditStatus }}
+            </mat-chip>
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">
+            <mat-icon>123</mat-icon>
+            Number of Loans
+          </span>
+
+          <span class="detail-value">
+            {{ customer.loanCount }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <!--FOOTER-->
+  <div class="dialog-footer">
+    <mat-icon>info</mat-icon>
+    <span>
+      This information is read-only and cannot be modified from this screen.
+    </span>
+  </div>
+</div>
