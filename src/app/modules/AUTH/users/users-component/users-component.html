@@ -1,0 +1,125 @@
+<div class="logs-data-container">
+  <mat-toolbar class="app-toolbar">
+    <span class="toolbar-title">Users</span>
+    <div class="flex-end">
+      <button
+        mat-stroked-button
+        class="refresh-btn"
+        (click)="loadUsers()"
+        [disabled]="isLoading() || datasource.data.length === 0">
+
+        <mat-icon>refresh</mat-icon>
+        Refresh Data
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="exportUsers()"
+        [disabled]="datasource.data.length === 0">
+
+        <mat-icon>download</mat-icon>
+        Export To Excel
+      </button>
+    </div>
+  </mat-toolbar>
+
+  @if (isLoading()){
+    <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+  } @else if (!isLoading() && datasource.data.length  === 0){
+    <h3 class="text-centered">
+      No users data available
+    </h3>
+  } @else {
+    <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef> User ID </th>
+        <td mat-cell *matCellDef="let user"> {{user.userId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="userFullName">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let user"> {{user.userFullName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Username </th>
+        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="userRole">
+        <th mat-header-cell *matHeaderCellDef> User Role </th>
+        <td mat-cell *matCellDef="let user"> {{user.userRole}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let user">
+           <span class="status-badge" [ngClass]="{
+        'status-active': user.status === 'ACTIVE',
+        'status-inactive': user.status === 'INACTIVE'
+      }">
+      {{ user.status }}
+    </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let user">
+          @if (user.status === 'ACTIVE') {
+            <button
+              mat-icon-button
+              matTooltip="Disable this user's account"
+              [disabled]="loadingUserId === user.userId"
+              (click)="disableAccount(user)">
+
+              @if (loadingUserId === user.userId) {
+                <mat-spinner diameter="20"></mat-spinner>
+              } @else {
+                <mat-icon>person_off</mat-icon>
+              }
+            </button>
+          } @else {
+            <button
+              mat-icon-button
+              matTooltip="Enable this user's account"
+              [disabled]="loadingUserId === user.userId"
+              (click)="enableAccount(user)">
+              @if (loadingUserId === user.userId) {
+                <mat-spinner diameter="20"></mat-spinner>
+              } @else {
+                <mat-icon>person</mat-icon>
+              }
+            </button>
+          }
+        </td>
+      </ng-container>
+
+
+
+      <!-- Header -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <!-- Rows -->
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+  }
+  <!-- PAGINATOR -->
+  <mat-paginator
+    *ngIf="!isLoading() && datasource.data.length > 0"
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

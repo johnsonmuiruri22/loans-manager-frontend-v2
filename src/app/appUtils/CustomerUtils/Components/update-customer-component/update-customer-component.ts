@@ -24,7 +24,8 @@ export class UpdateCustomerComponent {
               private fb: FormBuilder) {
     this.updateCustomerForm = this.fb.group({
       surname: [this.customer.surname,Validators.required],
-      otherNames: [this.customer.otherNames,Validators.required],
+      firstname: [this.customer.firstname,Validators.required],
+      lastname: [this.customer.lastname,Validators.required],
       gender: [this.customer.gender,Validators.required],
       dob: [this.customer.dob,Validators.required],
       phone: [

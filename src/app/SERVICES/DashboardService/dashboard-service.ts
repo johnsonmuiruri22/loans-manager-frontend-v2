@@ -1,11 +1,14 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {DashboardSummaryDTO} from '../../modules/features/dashboard-utils/dashboard-summary';
-import {LoanBorrowingTrend} from '../../modules/features/dashboard-utils/loan-borrowing-trend';
-import {CustomerRegistrationTrend} from '../../modules/features/dashboard-utils/customer-registration-trend';
-import {DashboardPeriod} from '../../modules/features/dashboard-utils/dashboard-period';
+import {catchError, Observable, throwError} from 'rxjs';
+import {DashboardSummaryDTO} from '../../modules/DASHBOARD/dashboard-utils/dashboard-summary';
+import {LoanBorrowingTrend} from '../../modules/DASHBOARD/dashboard-utils/loan-borrowing-trend';
+import {CustomerRegistrationTrend} from '../../modules/DASHBOARD/dashboard-utils/customer-registration-trend';
+import {DashboardPeriod} from '../../modules/DASHBOARD/dashboard-utils/dashboard-period';
+import {
+  CustomerDashboardSummaryDTO
+} from '../../modules/CUSTOMERS/customer-dashboard-utils/customer-dashboard-response';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +52,20 @@ export class DashboardService {
           period
         }
       }
+    );
+  }
+
+  getCustomerSummary(): Observable<CustomerDashboardSummaryDTO> {
+    return this.http.get<CustomerDashboardSummaryDTO>(
+      `${this.DASHBOARD_URL}/customer-profile/me`,
+      { withCredentials: true }
+    ).pipe(
+      catchError((error: any) =>
+        throwError(() => new Error(
+          error?.error?.message ??
+          'There was an error while fetching customer dashboard data!'
+        ))
+      )
     );
   }
 

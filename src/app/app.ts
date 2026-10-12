@@ -1,6 +1,6 @@
 import {Component, OnInit, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {AuthStateService} from './modules/security/services/auth-state-service';
+import {AuthStateService} from './modules/AUTH/services/auth-state-service';
 
 @Component({
   selector: 'app-root',

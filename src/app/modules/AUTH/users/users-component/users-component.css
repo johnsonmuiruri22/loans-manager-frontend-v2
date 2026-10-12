@@ -1,0 +1,58 @@
+.app-toolbar  {
+  width: 100%;
+  min-height: 64px;
+  height: auto;
+
+  padding: 0 20px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  background:linear-gradient(
+    135deg,
+    #1565C0,
+    #1E88E5
+  );
+  color: #1e293b;
+  border-radius: 12px;
+  border: none;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.refresh-btn{
+  border-radius: 20px;
+  border: 2px solid white;
+  color: #ffffff;
+}
+
+.toolbar-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+
+  letter-spacing: 2px;
+}
+
+.status-active {
+  background: linear-gradient(
+    135deg,
+    #22c55e,
+    #15803d
+  );
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(22, 163, 74, 0.18);
+}
+
+.status-inactive {
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #b91c1c
+  );
+  color: #ffffff;
+  box-shadow: 0 2px 5px rgba(220, 38, 38, 0.18);
+}

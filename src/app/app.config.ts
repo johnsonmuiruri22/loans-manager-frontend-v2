@@ -8,11 +8,11 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
-import {authInterceptor} from './modules/security/interceptor/auth-interceptor';
-import {AuthStateService} from './modules/security/services/auth-state-service';
+import {AuthStateService} from './modules/AUTH/services/auth-state-service';
 import {catchError, firstValueFrom, of} from 'rxjs';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {provideCharts, withDefaultRegisterables} from 'ng2-charts';
+import {authInterceptor} from './modules/AUTH/interceptor/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

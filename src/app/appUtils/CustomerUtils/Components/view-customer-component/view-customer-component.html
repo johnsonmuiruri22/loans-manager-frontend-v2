@@ -18,12 +18,12 @@
     <!-- Customer Avatar -->
     <div class="profile-header">
       <div class="customer-avatar">
-        {{ customer.surname.charAt(0) }}{{ customer.otherNames.charAt(0) }}
+        {{ customer.firstname.charAt(0) }}{{ customer.lastname.charAt(0) }}
       </div>
       <div>
         <h2>
-          {{ customer.surname }}
-          {{ customer.otherNames }}
+          {{ customer.firstname }}
+          {{ customer.lastname }}
         </h2>
 
         <p class="customer-number">
@@ -53,7 +53,7 @@
           </span>
           <span class="detail-value">
             {{ customer.surname }}
-            {{ customer.otherNames }}
+            {{ customer.firstname }} {{customer.lastname}}
           </span>
         </div>
 

@@ -27,18 +27,32 @@
               autocomplete="family-name">
           </mat-form-field>
 
-          <!-- Other Names -->
+          <!-- firstname -->
           <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Other Names</mat-label>
+            <mat-label>Firstname</mat-label>
+            <input
+              matInput
+              formControlName="firstname"
+              placeholder="Enter first name"
+              autocomplete="given-name">
+
+            <mat-error *ngIf="customerForm.get('firstname')?.hasError('required')">
+              First name is required
+            </mat-error>
+          </mat-form-field>
+
+          <!-- lastname -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Lastname</mat-label>
 
             <input
               matInput
-              formControlName="otherNames"
-              placeholder="Enter other names"
+              formControlName="lastname"
+              placeholder="Enter last name"
               autocomplete="given-name">
 
-            <mat-error *ngIf="customerForm.get('otherNames')?.hasError('required')">
-              Other names are required
+            <mat-error *ngIf="customerForm.get('lastname')?.hasError('required')">
+              Last name required
             </mat-error>
           </mat-form-field>
 

@@ -1,7 +1,7 @@
 export interface UserCardResponse {
   userId: number;
-  surname: string;
-  otherNames: string;
+  userFullName: string;
   username: string;
+  status: string;
   userRole: string;
 }

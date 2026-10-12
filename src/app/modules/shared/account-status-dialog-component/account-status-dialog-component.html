@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>
+  {{ data.action === 'DISABLE' ? 'Disable Account?' : 'Enable Account?' }}
+</h2>
+
+<mat-dialog-content>
+  @if (data.action === 'DISABLE') {
+    <p>
+      Are you sure you want to disable
+      <strong>{{ data.username }}</strong>'s account?
+    </p>
+
+    <p>
+      They will immediately lose access to the system and
+      their active sessions will be revoked.
+    </p>
+
+  } @else {
+
+    <p>
+      Are you sure you want to enable
+      <strong>{{ data.username }}</strong>'s account?
+    </p>
+
+    <p>
+      They will be able to access the system again.
+    </p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    type="button"
+    (click)="cancel()">
+    Cancel
+  </button>
+
+  <button
+    mat-flat-button
+    type="button"
+    (click)="confirm()">
+    {{ data.action === 'DISABLE' ? 'Disable Account' : 'Enable Account' }}
+  </button>
+</mat-dialog-actions>

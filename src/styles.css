@@ -7,7 +7,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    TOOLBAR
 =========================================== */
 
-mat-toolbar {
+.blue-gradient-bg-color {
   border-radius: 12px 12px 0 0;
   padding: 0 18px;
   min-height: 72px;
@@ -27,6 +27,7 @@ mat-toolbar {
   font-size: 22px;
   font-weight: 600;
   letter-spacing: .5px;
+  color: #ffffff;
 }
 
 .edit-btn{

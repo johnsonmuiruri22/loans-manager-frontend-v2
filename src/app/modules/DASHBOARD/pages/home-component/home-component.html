@@ -1,0 +1,5 @@
+@if (authState.role() === 'ADMIN' || authState.role() === 'BANKER'){
+  <app-admin-dashboard></app-admin-dashboard>
+} @else if (authState.role() === 'CUSTOMER'){
+  <app-customer-dashboard-component></app-customer-dashboard-component>
+}

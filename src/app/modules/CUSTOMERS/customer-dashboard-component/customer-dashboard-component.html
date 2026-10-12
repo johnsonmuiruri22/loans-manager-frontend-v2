@@ -1,0 +1,137 @@
+<div class="customer-dashboard-panel">
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="dashboard-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading your dashboard...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (hasError()) {
+    <div class="dashboard-error" role="alert">
+      <mat-icon color="warn">error_outline</mat-icon>
+
+      <p>{{ errorMessage }}</p>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="loadCustomerDashboard()">
+        <mat-icon>refresh</mat-icon>
+        Retry
+      </button>
+    </div>
+  }
+
+  <!-- Customer Dashboard -->
+  @if (!loading() && !hasError() && customerLoanSummary; as summary) {
+    <section class="customer-dashboard">
+
+      <!-- Customer Welcome Header -->
+      <div class="info-header">
+        <div class="avatar-info">
+
+          <!-- Placeholder profile image -->
+          <div class="customer-welcome">
+            <h4>
+              Welcome, {{ summary.customerFullName }}
+            </h4>
+
+            <p>Your personal loan dashboard</p>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="dashboard-description">
+        View your loan and repayment overview below.
+      </p>
+
+      <!-- Loan Amount Issued -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-icon loan-issued-icon">
+            <mat-icon>account_balance</mat-icon>
+          </div>
+          <span>Loan Amount Issued</span>
+        </div>
+
+        <h3>
+          {{ summary.loanAmountIssued | currency:'KES':'symbol':'1.2-2' }}
+        </h3>
+      </div>
+
+      <!-- Total Amount to Repay -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-icon total-repayment-icon">
+            <mat-icon>payments</mat-icon>
+          </div>
+
+          <span>Total Amount to Repay</span>
+        </div>
+
+        <h3>
+          {{ summary.totalAmountToBeRepaid | currency:'KES':'symbol':'1.2-2' }}
+        </h3>
+      </div>
+
+      <!-- Amount Paid -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-icon amount-paid-icon">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+
+          <span>Amount Paid</span>
+        </div>
+
+        <h3>
+          {{ summary.currentAmountPaid | currency:'KES':'symbol':'1.2-2' }}
+        </h3>
+      </div>
+
+      <!-- Remaining Balance -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-icon balance-icon">
+            <mat-icon>account_balance_wallet</mat-icon>
+          </div>
+
+          <span>Remaining Balance</span>
+        </div>
+
+        <h3>
+          {{ summary.remainingBalance | currency:'KES':'symbol':'1.2-2' }}
+        </h3>
+      </div>
+
+      <!-- Repayment Status -->
+      <div class="summary-card">
+        <div class="summary-card-header">
+          <div class="summary-icon repayment-status-icon">
+            <mat-icon>fact_check</mat-icon>
+          </div>
+
+          <span>Repayment Status</span>
+        </div>
+
+        <p class="repayment-status-value">
+          <mat-icon>
+            {{
+              summary.repaymentStatus === 'PAID_OFF'
+                ? 'check_circle'
+                : summary.repaymentStatus === 'DEFAULTED'
+                  ? 'warning'
+                  : 'schedule'
+            }}
+          </mat-icon>
+
+          {{ summary.repaymentStatus.replace('_', ' ') }}
+        </p>
+      </div>
+
+    </section>
+  }
+</div>

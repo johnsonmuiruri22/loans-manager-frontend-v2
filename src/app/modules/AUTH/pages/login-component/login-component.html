@@ -1,0 +1,56 @@
+<div class="login-container-full-width">
+  <div class="centered-position">
+    <div class="login-card">
+      <div class="logo-section">
+        <img src="img.png" alt="Company Logo" class="company-logo">
+        <h2>Welcome Back</h2>
+        <p>Sign in to access the Loan Management Portal</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <!--username-->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input type="text" matInput formControlName="username" required>
+          <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+
+          <!--password-->
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <mat-icon matPrefix>lock</mat-icon>
+            <input type="password" matInput formControlName="password" required>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+              Password is required
+            </mat-error>
+        </mat-form-field>
+        <div class="login-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loginForm.invalid || isLoading">
+            <mat-icon *ngIf="!isLoading">login</mat-icon>
+            <mat-progress-spinner
+              *ngIf="isLoading"
+              diameter="22"
+              mode="indeterminate">
+            </mat-progress-spinner>
+            <span *ngIf="!isLoading">Sign In</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="forgot-password-section">
+        <span>Forgot password? Click
+          <a routerLink="/reset-password" class="router-link">here</a> to reset.</span>
+      </div>
+    </div>
+    <div class="registration-section">
+      <span class="centered-title">&copy; 2026 | Johnson Technologies</span>
+    </div>
+  </div>
+</div>

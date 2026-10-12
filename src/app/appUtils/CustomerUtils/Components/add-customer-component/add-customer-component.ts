@@ -24,7 +24,8 @@ export class AddCustomerComponent implements OnInit{
               private snackbar: MatSnackBar, private dialogRef: MatDialogRef<AddCustomerComponent>) {
     this.customerForm = this.fb.group({
       surname: [''],
-      otherNames: [''],
+      firstname: ['',Validators.required],
+      lastname: ['',Validators.required],
       gender: ['',Validators.required],
       dob: ['',Validators.required],
       phone: ['',Validators.required,Validators.pattern(/^0[17]\d{8}$/)],

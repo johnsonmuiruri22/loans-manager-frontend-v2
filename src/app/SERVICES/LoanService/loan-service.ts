@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {catchError, Observable, tap, throwError} from 'rxjs';
-import {LoanRequests} from '../../appUtils/LoanUtils/LoanRequests';
+import {LoanRequestDetails} from '../../appUtils/LoanUtils/loan-request-details';
 import {PageResponse} from '../../appUtils/Shared/page-response';
 import {LoanProcessingInfo} from '../../appUtils/LoanUtils/loan-processing-info';
 import {LoanProcessedResponse} from '../../appUtils/LoanUtils/loan-processed-response';
@@ -21,8 +21,8 @@ export class LoanService {
 
   getLoanRecords(
     page: number,
-    size: number): Observable<PageResponse<LoanRequests>>{
-    return this.http.get<PageResponse<LoanRequests>>(`${this.LOANS_URL}/get/all`,{
+    size: number): Observable<PageResponse<LoanRequestDetails>>{
+    return this.http.get<PageResponse<LoanRequestDetails>>(`${this.LOANS_URL}/get/all`,{
       params: {
         page,
         size
@@ -39,6 +39,45 @@ export class LoanService {
         return throwError(() => new Error(apiError.message));
       })
     )
+  }
+
+  approveReviewedLoan(
+    loanId: number,
+    request: LoanProcessingInfo
+  ) {
+    return this.http.post<LoanProcessedResponse>(
+      `${this.LOANS_URL}/review/approve/${loanId}`,
+      request,
+      {
+        withCredentials: true
+      }
+    ).pipe(
+      catchError((error: any) => {
+        return throwError(
+          () => new Error(
+            error?.error?.message ?? 'Failed to approve reviewed loan'
+          )
+        );
+      })
+    );
+  }
+
+  rejectReviewedLoan(loanId: number) {
+    return this.http.post<LoanProcessedResponse>(
+      `${this.LOANS_URL}/review/reject/${loanId}`,
+      {},
+      {
+        withCredentials: true
+      }
+    ).pipe(
+      catchError((error: any) => {
+        return throwError(
+          () => new Error(
+            error?.error?.message ?? 'Failed to reject reviewed loan'
+          )
+        );
+      })
+    );
   }
 
   getRepaymentRecords(
@@ -61,6 +100,17 @@ export class LoanService {
       catchError((apiError: ApiErrorResponse)=>{
         return throwError(()=> new Error(apiError.message));
       })
+    );
+  }
+
+  downloadReceipt(loanId: number) {
+    return this.http.get(
+      `${this.LOANS_URL}/repayments/print-receipt/${loanId}`,
+      {
+        responseType: 'blob',
+        observe: 'response',
+        withCredentials: true
+      }
     );
   }
 

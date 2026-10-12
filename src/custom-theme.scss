@@ -33,3 +33,19 @@ body {
   // Reset the user agent margin.
   margin: 0;
 }
+
+mat-toolbar {
+  border-radius: 12px 12px 0 0;
+  padding: 0 18px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background:linear-gradient(
+    135deg,
+    #1565C0,
+    #1E88E5
+  );
+
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}

@@ -1,6 +1,7 @@
 export interface CustomerReqDTO {
   surname: string;
-  otherNames: string;
+  firstname: string;
+  lastname: string;
   gender: string;
   dob: Date;
   phone: string;

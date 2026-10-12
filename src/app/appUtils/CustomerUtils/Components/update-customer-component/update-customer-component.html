@@ -15,11 +15,20 @@
         }
       </mat-form-field>
 
-      <!--other names-->
+      <!--firstname-->
       <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Other Names</mat-label>
-        <input formControlName="otherNames" matInput required>
-        @if (updateCustomerForm.get('otherNames')?.hasError('required')){
+        <mat-label>Firstname</mat-label>
+        <input formControlName="firstname" matInput required>
+        @if (updateCustomerForm.get('firstname')?.hasError('required')){
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+
+      <!--lastname-->
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Lastname</mat-label>
+        <input formControlName="lastname" matInput required>
+        @if (updateCustomerForm.get('lastname')?.hasError('required')){
           <mat-error>This field is required</mat-error>
         }
       </mat-form-field>

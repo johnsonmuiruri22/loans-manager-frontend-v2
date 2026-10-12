@@ -1,7 +1,8 @@
 export interface CustomerRespDTO {
   customerId: number;
   surname: string;
-  otherNames: string;
+  firstname: string;
+  lastname: string;
   gender: string;
   dob: Date;
   age: number;
